@@ -10,7 +10,7 @@ type PageProps = {
 };
 
 const LEVELS = ["beginner", "intermediate", "advanced", "mixed"];
-const TRACKS = ["Frontend", "Backend", "MERN", "Full Stack", "DevOps", "JavaScript", "Python"];
+const TRACKS = ["Frontend", "Backend", "MERN", "Full Stack", "Python", "Automation", "Data Analysis", "DevOps", "JavaScript"];
 
 export default async function RoadmapsPage({ searchParams }: PageProps) {
   const params = await Promise.resolve(searchParams ?? {});

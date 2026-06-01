@@ -3,6 +3,8 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/landing/footer";
 import { LearningItemCard } from "@/components/learning/item-card";
 import { Pagination, QueryChips } from "@/components/learning/query-bar";
+import { InteractiveRetentionLab } from "@/components/learning/interactive-retention-lab";
+import { CommunityCareerHub } from "@/components/learning/community-career-hub";
 import { queryCourses } from "@/lib/learning/catalog";
 import { firstQueryValue, parsePage, toQueryMap, type SearchParams } from "@/lib/learning/query";
 
@@ -11,7 +13,7 @@ type PageProps = {
 };
 
 const COURSE_LEVELS = ["beginner", "intermediate", "advanced", "mixed"];
-const COURSE_TAGS = ["Python", "React", "JavaScript", "Java", "Frontend", "Backend", "MERN", "Full Stack"];
+const COURSE_TAGS = ["Python", "React", "JavaScript", "Java", "TypeScript", "Node.js", "Frontend", "Backend", "MERN", "Full Stack"];
 const PYTHON_PATH = ["Absolute Beginner", "Python Basics", "Projects", "Automation", "Data Science"];
 
 export default async function CoursesPage({ searchParams }: PageProps) {
@@ -177,6 +179,9 @@ export default async function CoursesPage({ searchParams }: PageProps) {
             </ul>
           </article>
         </section>
+
+        <InteractiveRetentionLab />
+        <CommunityCareerHub />
 
         <section className="mt-8 border border-border bg-card/50 p-5">
           <p className="font-grotesk text-xl font-semibold text-foreground">Beginner FAQ</p>

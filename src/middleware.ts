@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
-// Routes that require authentication
-const PROTECTED_PREFIXES = ["/dashboard", "/courses/", "/profile", "/settings"];
+// Routes that require authentication.
+// Learning discovery and detail routes stay public for SEO and onboarding.
+const PROTECTED_PREFIXES = ["/dashboard", "/profile", "/settings"];
 // Routes that are only for guests (redirect if already logged in)
 const GUEST_ONLY = ["/login", "/signup"];
 

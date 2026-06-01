@@ -9,6 +9,12 @@ function weeksFromHours(hours: number | null): string {
 
 export function LearningDetailView({ item }: { item: LearningItem }) {
   const graphSteps = item.roadmapSteps.slice(0, 6);
+  const previewLessons = item.roadmapSteps.slice(0, 2);
+  const discussionTopics = [
+    `Questions on ${item.title} fundamentals`,
+    "Code review requests for current assignments",
+    "Help thread for quiz and challenge blockers",
+  ];
 
   return (
     <section className="mx-auto max-w-[1180px] px-6 pb-20 pt-28 md:px-10">
@@ -111,6 +117,29 @@ export function LearningDetailView({ item }: { item: LearningItem }) {
             <li>• Instructor profile: Core Team Mentor (8+ years practical delivery).</li>
             <li>• Learning path: {item.learningPath ?? "Foundation → Build → Practice → Ship"}.</li>
           </ul>
+        </article>
+      </section>
+
+      <section className="mt-6 grid gap-3 lg:grid-cols-2">
+        <article className="border border-border bg-card/50 p-5">
+          <h2 className="font-grotesk text-xl font-semibold text-foreground">Instructor and Free Preview</h2>
+          <ul className="mt-3 space-y-2 font-ibm-mono text-xs leading-6 text-muted-foreground">
+            <li>• Lead Instructor: Core Team Mentor (8+ years, production backend/frontend delivery)</li>
+            <li>• Preview lesson 1: {previewLessons[0] ?? "Course introduction and setup"}</li>
+            <li>• Preview lesson 2: {previewLessons[1] ?? "First practical coding assignment"}</li>
+            <li>• Full certificate unlock target: 80% completion + capstone submission</li>
+          </ul>
+        </article>
+        <article className="border border-border bg-card/50 p-5">
+          <h2 className="font-grotesk text-xl font-semibold text-foreground">Course Discussion Board</h2>
+          <ul className="mt-3 space-y-2 font-ibm-mono text-xs leading-6 text-muted-foreground">
+            {discussionTopics.map((topic) => (
+              <li key={topic}>• {topic}</li>
+            ))}
+          </ul>
+          <p className="mt-3 border-t border-border pt-2 font-ibm-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
+            Peer review queue and mentor replies are updated daily.
+          </p>
         </article>
       </section>
 

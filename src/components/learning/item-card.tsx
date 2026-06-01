@@ -54,6 +54,12 @@ export function LearningItemCard({ item }: { item: LearningItem }) {
 
       <div className="mt-4 border-t border-border pt-3">
         <p className="font-ibm-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
+          Prerequisites:
+        </p>
+        <p className="mt-1 text-sm text-foreground">
+          {item.prerequisites.slice(0, 1)[0] ?? "No strict prerequisite"}
+        </p>
+        <p className="mt-2 font-ibm-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
           Recommended next:
         </p>
         <p className="mt-1 text-sm text-foreground">

@@ -72,13 +72,52 @@ export function getItemsByType(type: LearningItemType): LearningItem[] {
   return catalog.items.filter((item) => item.type === type);
 }
 
+function isOpaqueTitle(item: LearningItem): boolean {
+  const title = item.title.trim();
+  const compact = title.replace(/\s+/g, "");
+  if (!compact) return true;
+  const alphaCount = (compact.match(/[a-z]/gi) ?? []).length;
+  const digitCount = (compact.match(/[0-9]/g) ?? []).length;
+  if (alphaCount === 0 && digitCount > 0) return true;
+  if (alphaCount < 3 && digitCount >= alphaCount * 2) return true;
+  return false;
+}
+
+function hasStrongContext(item: LearningItem): boolean {
+  const contextScore =
+    item.roadmapSteps.length * 3 +
+    item.projectIdeas.length * 2 +
+    item.prerequisites.length * 2 +
+    item.outcomes.length * 2 +
+    (item.lessonCount ?? 0) / 5 +
+    (item.practiceCount ?? 0) / 4;
+  return contextScore >= 8;
+}
+
+function isDiscoverable(item: LearningItem): boolean {
+  if (item.type === "resource" || item.type === "case-study") return false;
+  if (isOpaqueTitle(item)) return false;
+  if (!hasStrongContext(item)) return false;
+  return true;
+}
+
+export function getDiscoverableItemsByType(type: LearningItemType): LearningItem[] {
+  return getItemsByType(type).filter(isDiscoverable);
+}
+
 export function getItemBySlug(slug: string, type: LearningItemType): LearningItem | undefined {
   return catalog.items.find((item) => item.slug === slug && item.type === type);
 }
 
+export function getDiscoverableItemBySlug(slug: string, type: LearningItemType): LearningItem | undefined {
+  return getDiscoverableItemsByType(type).find((item) => item.slug === slug);
+}
+
 export function getFeaturedCourses(limit = 6): LearningItem[] {
   const priority = new Set(["course", "roadmap"]);
-  return sortByCatalogPriority(catalog.items.filter((item) => priority.has(item.type))).slice(0, limit);
+  return sortByCatalogPriority(
+    catalog.items.filter((item) => priority.has(item.type) && isDiscoverable(item))
+  ).slice(0, limit);
 }
 
 function matchesSearch(item: LearningItem, search: string): boolean {
@@ -134,7 +173,7 @@ export function queryCourses(input: {
   tag?: string;
   page?: number;
 }): PagedResult<LearningItem> {
-  const filtered = sortByCatalogPriority(getItemsByType("course"))
+  const filtered = sortByCatalogPriority(getDiscoverableItemsByType("course"))
     .filter((item) => matchesSearch(item, input.search ?? ""))
     .filter((item) => matchesDifficulty(item, input.level ?? ""))
     .filter((item) => matchesTag(item, input.tag ?? ""));
@@ -147,7 +186,7 @@ export function queryRoadmaps(input: {
   level?: Difficulty | "";
   page?: number;
 }): PagedResult<LearningItem> {
-  const filtered = sortByCatalogPriority(getItemsByType("roadmap"))
+  const filtered = sortByCatalogPriority(getDiscoverableItemsByType("roadmap"))
     .filter((item) => matchesTag(item, input.track ?? ""))
     .filter((item) => matchesDifficulty(item, input.level ?? ""));
 
@@ -160,7 +199,7 @@ export function queryProjects(input: {
   difficulty?: Difficulty | "";
   page?: number;
 }): PagedResult<LearningItem> {
-  const filtered = sortByCatalogPriority(getItemsByType("project"))
+  const filtered = sortByCatalogPriority(getDiscoverableItemsByType("project"))
     .filter((item) => matchesSearch(item, input.search ?? ""))
     .filter((item) => matchesTag(item, input.lang ?? ""))
     .filter((item) => matchesDifficulty(item, input.difficulty ?? ""));
@@ -170,7 +209,7 @@ export function queryProjects(input: {
 
 export function getTopTags(type: LearningItemType, limit = 20): string[] {
   const counts = new Map<string, number>();
-  for (const item of getItemsByType(type)) {
+  for (const item of getDiscoverableItemsByType(type)) {
     for (const tag of item.tags) {
       counts.set(tag, (counts.get(tag) ?? 0) + 1);
     }

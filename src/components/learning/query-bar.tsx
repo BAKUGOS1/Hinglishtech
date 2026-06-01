@@ -25,10 +25,10 @@ export function QueryChips(props: {
     <div className="flex flex-wrap gap-2">
       <Link
         href={withQuery(props.pathname, props.current, { [props.queryKey]: undefined, page: undefined })}
-        className={`rounded-md border px-2.5 py-1 text-xs transition-colors ${
+        className={`border px-2.5 py-1 font-ibm-mono text-[10px] uppercase tracking-[0.1em] transition-colors ${
           !props.activeValue
             ? "border-primary/50 bg-primary/10 text-primary"
-            : "border-border/50 bg-secondary/50 text-muted-foreground hover:text-foreground"
+            : "border-border bg-secondary/50 text-muted-foreground hover:text-foreground"
         }`}
       >
         All
@@ -37,10 +37,10 @@ export function QueryChips(props: {
         <Link
           key={value}
           href={withQuery(props.pathname, props.current, { [props.queryKey]: value, page: undefined })}
-          className={`rounded-md border px-2.5 py-1 text-xs transition-colors ${
+          className={`border px-2.5 py-1 font-ibm-mono text-[10px] uppercase tracking-[0.1em] transition-colors ${
             props.activeValue === value
               ? "border-primary/50 bg-primary/10 text-primary"
-              : "border-border/50 bg-secondary/50 text-muted-foreground hover:text-foreground"
+              : "border-border bg-secondary/50 text-muted-foreground hover:text-foreground"
           }`}
         >
           {value}
@@ -66,27 +66,27 @@ export function Pagination(props: {
       {previousPage ? (
         <Link
           href={withQuery(props.pathname, props.current, { page: String(previousPage) })}
-          className="rounded-md border border-border/50 bg-secondary/50 px-3 py-1.5 text-sm text-foreground"
+          className="border border-border bg-secondary/50 px-3 py-1.5 font-ibm-mono text-[10px] uppercase tracking-[0.1em] text-foreground"
         >
           Previous
         </Link>
       ) : (
-        <span className="rounded-md border border-border/40 bg-secondary/20 px-3 py-1.5 text-sm text-muted-foreground">
+        <span className="border border-border/40 bg-secondary/20 px-3 py-1.5 font-ibm-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
           Previous
         </span>
       )}
-      <span className="text-sm text-muted-foreground">
+      <span className="font-ibm-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
         Page {props.currentPage} of {props.totalPages}
       </span>
       {nextPage ? (
         <Link
           href={withQuery(props.pathname, props.current, { page: String(nextPage) })}
-          className="rounded-md border border-border/50 bg-secondary/50 px-3 py-1.5 text-sm text-foreground"
+          className="border border-border bg-secondary/50 px-3 py-1.5 font-ibm-mono text-[10px] uppercase tracking-[0.1em] text-foreground"
         >
           Next
         </Link>
       ) : (
-        <span className="rounded-md border border-border/40 bg-secondary/20 px-3 py-1.5 text-sm text-muted-foreground">
+        <span className="border border-border/40 bg-secondary/20 px-3 py-1.5 font-ibm-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
           Next
         </span>
       )}

@@ -1,90 +1,62 @@
-import {
-  BookOpen,
-  Users,
-  Zap,
-  Globe,
-  Code2,
-  GraduationCap,
-} from "lucide-react";
+import { BookCheck, ChartColumn, ClipboardCheck, NotebookTabs, Trophy, Users } from "lucide-react";
 
 const features = [
   {
-    icon: BookOpen,
-    title: "Hinglish Mein Content",
-    description:
-      "Saare courses Hindi-English mix mein — jaise tum apne friends se baat karte ho, waise hi seekho.",
+    icon: BookCheck,
+    title: "Structured Learning Paths",
+    description: "Go from absolute beginner to role-ready through guided milestones and recommended next courses.",
   },
   {
-    icon: Code2,
-    title: "Project-Based Learning",
-    description:
-      "Har module ke end mein ek real project. Portfolio banao, sirf theory nahi.",
+    icon: ClipboardCheck,
+    title: "Practice After Every Module",
+    description: "Each track includes exercises, quizzes, and assignment prompts with solution directions.",
   },
   {
-    icon: Zap,
-    title: "Zero se Hero Roadmaps",
-    description:
-      "Structured paths jo beginner se job-ready tak le jaayein. Koi confusion nahi.",
+    icon: ChartColumn,
+    title: "Progress Graphs",
+    description: "Visual stage graphs show where learners are and what to complete next without confusion.",
+  },
+  {
+    icon: NotebookTabs,
+    title: "Notes and Cheatsheets",
+    description: "Focused module notes and quick-recall references keep revision fast before interviews.",
+  },
+  {
+    icon: Trophy,
+    title: "Certificates and Outcomes",
+    description: "Cards and detail pages show expected skills, practical deliverables, and certificate availability.",
   },
   {
     icon: Users,
-    title: "Desi Dev Community",
-    description:
-      "Discord pe 5,000+ devs ka community. Doubts poochho, pair-program karo, dost banao.",
-  },
-  {
-    icon: Globe,
-    title: "Industry-Ready Stack",
-    description:
-      "React, Next.js, Node, TypeScript, Postgres — wohi tools jo companies use karti hain.",
-  },
-  {
-    icon: GraduationCap,
-    title: "Certificates & Projects",
-    description:
-      "Har course complete karo aur verifiable certificate lo. LinkedIn pe flex karo.",
+    title: "Trust Through Context",
+    description: "Clear prerequisites, estimated effort, and project impact help learners choose the right track.",
   },
 ];
 
 export function Features() {
   return (
-    <section id="features" className="border-t border-border/50 py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        {/* Section header */}
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">
-            Why CodeChai
+    <section id="features" className="border-y border-border bg-card/30 py-16">
+      <div className="mx-auto max-w-[1280px] px-6 md:px-10">
+        <div className="max-w-2xl">
+          <p className="font-ibm-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
+            [01] Platform Strength
           </p>
-          <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Coding seekhna ab boring nahi hai
+          <h2 className="mt-3 font-grotesk text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+            Built for Practical Learning, Not Passive Watching
           </h2>
-          <p className="mt-4 text-muted-foreground">
-            Traditional courses mein neend aa jaati hai? CodeChai ke saath
-            coding seekho apni zabaan mein, apni pace pe.
-          </p>
         </div>
 
-        {/* Feature grid */}
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="group relative rounded-lg border border-border/50 bg-card/50 p-6 transition-all duration-300 hover:border-primary/20 hover:bg-card"
-            >
-              {/* Hover glow */}
-              <div className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-primary/5 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
-
-              <div className="flex h-10 w-10 items-center justify-center rounded-md border border-border/50 bg-secondary/50 text-primary transition-colors duration-300 group-hover:border-primary/30 group-hover:bg-primary/10">
-                <feature.icon className="h-5 w-5" />
+            <article key={feature.title} className="border border-border bg-background p-5">
+              <div className="inline-flex h-10 w-10 items-center justify-center border border-primary/50 bg-secondary">
+                <feature.icon className="h-4.5 w-4.5 text-primary" />
               </div>
-
-              <h3 className="mt-4 font-heading text-base font-semibold text-foreground">
-                {feature.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              <h3 className="mt-4 font-grotesk text-lg font-semibold text-foreground">{feature.title}</h3>
+              <p className="mt-2 font-ibm-mono text-xs leading-6 tracking-[0.02em] text-muted-foreground">
                 {feature.description}
               </p>
-            </div>
+            </article>
           ))}
         </div>
       </div>

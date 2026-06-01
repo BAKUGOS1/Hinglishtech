@@ -22,6 +22,12 @@ export type LearningItem = {
   projectIdeas: string[];
   prerequisites: string[];
   outcomes: string[];
+  learningPath: string | null;
+  lessonCount: number | null;
+  hasCertificate: boolean;
+  studentCount: number | null;
+  rating: number | null;
+  practiceCount: number | null;
 };
 
 export type LearningCatalog = {

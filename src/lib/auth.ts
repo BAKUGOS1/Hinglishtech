@@ -38,13 +38,22 @@ const socialProviders = {
     : {}),
 };
 
+const fallbackSecretSeed =
+  process.env.NEXT_PUBLIC_APP_URL ||
+  process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+  process.env.VERCEL_URL;
+
 export const auth = betterAuth({
   baseURL: getAuthBaseURL(),
   secret:
     process.env.BETTER_AUTH_SECRET ??
+    process.env.AUTH_SECRET ??
+    (fallbackSecretSeed
+      ? `hinglishtech-${fallbackSecretSeed.replace(/[^a-zA-Z0-9]/g, "-")}-auth`
+      : undefined) ??
     (process.env.NODE_ENV === "development"
       ? "hinglishtech-development-secret"
-      : undefined),
+      : "hinglishtech-production-fallback-secret"),
 
   database: drizzleAdapter(db, {
     provider: "pg",

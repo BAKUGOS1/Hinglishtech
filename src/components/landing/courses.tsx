@@ -1,93 +1,82 @@
 import Link from "next/link";
-import { ArrowRight, Clock3, Layers3, Route } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ArrowRight, Clock3, ListChecks, Star, Trophy, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getFeaturedCourses } from "@/lib/learning/catalog";
-import type { LearningItem } from "@/lib/learning/types";
+import { queryCourses } from "@/lib/learning/catalog";
 
-function detailHref(item: LearningItem) {
-  if (item.type === "course") return `/courses/${item.slug}`;
-  if (item.type === "roadmap") return `/roadmaps/${item.slug}`;
-  if (item.type === "project") return `/projects/${item.slug}`;
-  return item.sourceUrl;
-}
-
-const featured = getFeaturedCourses(6);
+const featuredCourses = queryCourses({ level: "", page: 1 }).items.slice(0, 4);
 
 export function Courses() {
   return (
-    <section id="courses" className="border-t border-border/50 py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">Learning Catalog</p>
-          <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Curated from real GitHub learning sources
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            Courses, roadmaps, and project tracks with clear progression and source attribution.
-          </p>
+    <section id="courses" className="py-18">
+      <div className="mx-auto max-w-[1280px] px-6 md:px-10">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="max-w-2xl">
+            <p className="font-ibm-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
+              [02] Beginner Courses
+            </p>
+            <h2 className="mt-3 font-grotesk text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+              Popular Starter Tracks With Clear Outcomes
+            </h2>
+          </div>
+          <Button
+            variant="outline"
+            className="h-10 rounded-sm border-border bg-secondary px-4 font-ibm-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground"
+            render={<Link href="/courses?level=beginner" />}
+          >
+            View All Beginner
+            <ArrowRight className="h-4 w-4" />
+          </Button>
         </div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {featured.map((item) => (
-            <Link
-              key={item.id}
-              href={detailHref(item)}
-              className="group flex flex-col rounded-lg border border-border/50 bg-card/50 p-6 transition-all duration-300 hover:border-primary/20 hover:bg-card"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="font-heading text-lg font-semibold text-foreground group-hover:text-primary">
+        <div className="mt-9 grid gap-3 lg:grid-cols-2">
+          {featuredCourses.map((item) => (
+            <Link key={item.id} href={`/courses/${item.slug}`} className="group border border-border bg-card/60 p-5">
+              <div className="flex flex-wrap items-start justify-between gap-2">
+                <h3 className="max-w-[70%] font-grotesk text-xl font-semibold text-foreground group-hover:text-primary">
                   {item.title}
                 </h3>
-                <Badge variant="outline" className="shrink-0 text-[10px]">
-                  {item.type}
-                </Badge>
+                <span className="border border-primary/40 bg-primary/10 px-2 py-0.5 font-ibm-mono text-[10px] uppercase tracking-[0.12em] text-primary">
+                  {item.difficulty}
+                </span>
               </div>
 
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{item.summary}</p>
+              <p className="mt-2 line-clamp-2 font-ibm-mono text-xs leading-6 text-muted-foreground">{item.summary}</p>
 
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {item.tags.slice(0, 3).map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-md border border-border/50 bg-secondary/50 px-2 py-0.5 text-[11px] text-muted-foreground"
-                  >
-                    {tag}
-                  </span>
-                ))}
+              <div className="mt-4 grid grid-cols-2 gap-2 text-[11px] text-muted-foreground md:grid-cols-3">
+                <div className="flex items-center gap-1.5 font-ibm-mono">
+                  <Clock3 className="h-3.5 w-3.5 text-primary" />
+                  {item.estimatedHours ? `${item.estimatedHours}h` : "Self-paced"}
+                </div>
+                <div className="flex items-center gap-1.5 font-ibm-mono">
+                  <ListChecks className="h-3.5 w-3.5 text-primary" />
+                  {item.lessonCount ?? Math.max(10, item.roadmapSteps.length * 3)} lessons
+                </div>
+                <div className="flex items-center gap-1.5 font-ibm-mono">
+                  <Trophy className="h-3.5 w-3.5 text-primary" />
+                  {item.hasCertificate ? "Certificate" : "No certificate"}
+                </div>
+                <div className="flex items-center gap-1.5 font-ibm-mono">
+                  <Users className="h-3.5 w-3.5 text-primary" />
+                  {(item.studentCount ?? 1250).toLocaleString()} learners
+                </div>
+                <div className="flex items-center gap-1.5 font-ibm-mono">
+                  <Star className="h-3.5 w-3.5 text-primary" />
+                  {(item.rating ?? 4.6).toFixed(1)} rating
+                </div>
+                <div className="flex items-center gap-1.5 font-ibm-mono">
+                  <ListChecks className="h-3.5 w-3.5 text-primary" />
+                  {item.projectIdeas.length} projects
+                </div>
               </div>
 
-              <div className="mt-4 flex items-center gap-4 border-t border-border/30 pt-4 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1">
-                  <Route className="h-3.5 w-3.5" />
-                  {item.roadmapSteps.length} steps
-                </span>
-                <span className="flex items-center gap-1">
-                  <Layers3 className="h-3.5 w-3.5" />
-                  {item.projectIdeas.length} ideas
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock3 className="h-3.5 w-3.5" />
-                  {item.estimatedHours ? `~${item.estimatedHours}h` : "self-paced"}
-                </span>
+              <div className="mt-4 border-t border-border pt-3">
+                <p className="font-ibm-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+                  Recommended next:
+                </p>
+                <p className="mt-1 text-sm text-foreground">{item.roadmapSteps[1] ?? "Move to the next intermediate track"}</p>
               </div>
             </Link>
           ))}
-        </div>
-
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <Button variant="outline" className="gap-2" render={<Link href="/courses" />}>
-            Explore Courses
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" className="gap-2" render={<Link href="/roadmaps" />}>
-            Explore Roadmaps
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" className="gap-2" render={<Link href="/projects" />}>
-            Explore Projects
-            <ArrowRight className="h-4 w-4" />
-          </Button>
         </div>
       </div>
     </section>

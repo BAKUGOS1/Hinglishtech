@@ -143,6 +143,12 @@ export function normalizeItem(rawItem, idSeed) {
     projectIdeas: rawItem.projectIdeas?.filter(Boolean) ?? [],
     prerequisites: rawItem.prerequisites?.filter(Boolean) ?? [],
     outcomes: rawItem.outcomes?.filter(Boolean) ?? [],
+    learningPath: rawItem.learningPath?.trim() ?? null,
+    lessonCount: Number.isFinite(rawItem.lessonCount) ? Number(rawItem.lessonCount) : null,
+    hasCertificate: Boolean(rawItem.hasCertificate),
+    studentCount: Number.isFinite(rawItem.studentCount) ? Number(rawItem.studentCount) : null,
+    rating: Number.isFinite(rawItem.rating) ? Number(rawItem.rating) : null,
+    practiceCount: Number.isFinite(rawItem.practiceCount) ? Number(rawItem.practiceCount) : null,
   };
 }
 

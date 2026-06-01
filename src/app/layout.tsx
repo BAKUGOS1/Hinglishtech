@@ -1,32 +1,30 @@
 import type { Metadata } from "next";
-import { Geist, Inter, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
   subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "700"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "CodeChai | Tech Education in Hinglish",
-  description: "Learn modern web development in a mix of Hindi and English. Desi flavor, world-class skills.",
+  title: "HinglishTech | Learning Catalog",
+  description:
+    "Production-ready learning catalog with structured courses, roadmaps, and project tracks from curated engineering sources.",
   openGraph: {
-    title: "CodeChai | Tech Education in Hinglish",
-    description: "Learn modern web development in a mix of Hindi and English. Desi flavor, world-class skills.",
+    title: "HinglishTech | Learning Catalog",
+    description:
+      "Production-ready learning catalog with structured courses, roadmaps, and project tracks from curated engineering sources.",
     type: "website",
   },
 };
@@ -39,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col font-sans antialiased bg-background`}
+        className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} min-h-screen flex flex-col font-sans antialiased bg-background`}
       >
         <ThemeProvider
           attribute="class"

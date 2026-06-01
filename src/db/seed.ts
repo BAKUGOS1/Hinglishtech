@@ -15,7 +15,10 @@ import * as schema from "./schema";
 // Next.js doesn't auto-load .env.local for scripts, so we do it manually.
 // If dotenv isn't installed we fall back to process.env (CI, Vercel, etc.)
 try {
-  const { config } = await import("dotenv");
+  const dotenv = "dotenv";
+  const { config } = (await import(dotenv)) as {
+    config: (options: { path: string }) => void;
+  };
   config({ path: ".env.local" });
 } catch {
   // dotenv not installed — rely on existing env vars

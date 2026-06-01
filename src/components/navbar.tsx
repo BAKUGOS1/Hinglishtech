@@ -7,9 +7,9 @@ import { ChaiCupIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-  { label: "Courses", href: "#courses" },
-  { label: "Community", href: "#community" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Courses", href: "/courses" },
+  { label: "Roadmaps", href: "/roadmaps" },
+  { label: "Projects", href: "/projects" },
   { label: "Blog", href: "/blog" },
 ];
 

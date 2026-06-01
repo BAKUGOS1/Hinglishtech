@@ -1,0 +1,57 @@
+name: Catalog Sync
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  sync-catalog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.24.0
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build learning catalog
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm catalog:build
+
+      - name: Validate catalog parser
+        run: pnpm catalog:test
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: refresh learning catalog"
+          committer: "BAKUGOS1 <191239075+BAKUGOS1@users.noreply.github.com>"
+          author: "BAKUGOS1 <191239075+BAKUGOS1@users.noreply.github.com>"
+          title: "chore: refresh learning catalog"
+          body: |
+            Automated refresh of GitHub learning catalog data.
+
+            - Regenerated `src/content/learning-catalog.json`
+            - Validated parser fixtures via `pnpm catalog:test`
+          branch: "chore/catalog-sync"
+          delete-branch: true
+          labels: |
+            automation
+            learning-catalog

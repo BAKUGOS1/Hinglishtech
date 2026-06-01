@@ -30,3 +30,18 @@ Tech Education in Hinglish — Desi flavor, world-class skills.
    ```
 
 5. Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+## Learning Catalog
+
+This project includes a GitHub-sourced learning catalog with:
+
+- `/courses`
+- `/roadmaps`
+- `/projects`
+
+Build or refresh the catalog:
+
+```bash
+pnpm catalog:build
+pnpm catalog:test
+```

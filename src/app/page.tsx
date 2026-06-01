@@ -5,6 +5,7 @@ import { Courses } from "@/components/landing/courses";
 import { Testimonials } from "@/components/landing/testimonials";
 import { CTA } from "@/components/landing/cta";
 import { Footer } from "@/components/landing/footer";
+import { LearningHub } from "@/components/landing/learning-hub";
 
 export default function HomePage() {
   return (
@@ -14,6 +15,7 @@ export default function HomePage() {
         <Hero />
         <Features />
         <Courses />
+        <LearningHub />
         <Testimonials />
         <CTA />
       </main>
